@@ -9,6 +9,22 @@ import { Component } from '@angular/core';
     <ul>
       <li [class]="tastinessColor(currentRecipe)" (click)="isBaked(currentRecipe)" *ngFor="let currentRecipe of recipes" >{{currentRecipe.title}} <button (click)='editRecipe()'>Edit</button></li>
     </ul>
+    <div>
+     <h3>{{selectedRecipe.title}}</h3>
+     <p>Recipe Baked? {{selectedRecipe.baked}}</p>
+    <h3>Edit Recipe</h3>
+    <label>Enter Recipe title:</label>
+    <input [(ngModel)]="selectedRecipe.title">
+    <label>Enter Recipe ingredients:</label>
+    <input [(ngModel)]="selectedRecipe.ingredients">
+    <label>Enter Recipe directions:</label>
+    <input [(ngModel)]="selectedRecipe.directions">
+     <label>Enter Recipe Tastiness Level (1-3):</label>
+     <br>
+     <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="1">1 (Low Tastiness)<br>
+     <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="2">2 (Medium Tastiness)<br>
+     <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="3">3 (High Tastiness)
+    </div>
   </div>
   `
 })
@@ -24,6 +40,8 @@ export class AppComponent {
     new Recipe('Mac and Cheese', 'macaroni and cheese', 'Put it all together and youre good to go', 2),
     new Recipe('Peanut Butter Bars', 'Peanut butter, powdered sugar, butter, crushed graham crackers, melted chocolate chips', 'melt butter, mix together all ingredients except chocolate, put into brownie pan, drizzle chocolate to cover top, put in fridge for 2 hours.', 3)
   ];
+
+  selectedRecipe: Recipe = this.recipes[0];
 
   editRecipe() {
     alert("You just requested to edit this recipe!");
