@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <h1>RECIPEEEESSSSSSSS</h1>
     <h3>{{currentFoodMood}} - {{month}}/{{day}}/{{year}}</h3>
     <ul>
-      <li [class]="tastinessColor(currentRecipe)" (click)="isBaked(currentRecipe)" *ngFor="let currentRecipe of recipes" >{{currentRecipe.title}} <button (click)='editRecipe()'>Edit</button></li>
+      <li [class]="tastinessColor(currentRecipe)" (click)="isBaked(currentRecipe)" *ngFor="let currentRecipe of recipes" >{{currentRecipe.title}} <button (click)='editRecipe(currentRecipe)'>Edit</button></li>
     </ul>
     <div>
      <h3>{{selectedRecipe.title}}</h3>
@@ -43,8 +43,8 @@ export class AppComponent {
 
   selectedRecipe: Recipe = this.recipes[0];
 
-  editRecipe() {
-    alert("You just requested to edit this recipe!");
+  editRecipe(clickedRecipe) {
+    this.selectedRecipe = clickedRecipe;
   }
 
   isBaked(clickedRecipe: Recipe) {
