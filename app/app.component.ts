@@ -7,11 +7,20 @@ import { Component } from '@angular/core';
     <h1>RECIPEEEESSSSSSSS</h1>
     <h3>{{currentFoodMood}} - {{month}}/{{day}}/{{year}}</h3>
     <ul>
-      <li [class]="tastinessColor(currentRecipe)" (click)="isBaked(currentRecipe)" *ngFor="let currentRecipe of recipes"> {{currentRecipe.title}}
+      <li [class]="tastinessColor(currentRecipe)" *ngFor="let currentRecipe of recipes"> {{currentRecipe.title}}
+        <button (click)='showDetails(currentRecipe)'>Show details</button>
         <button (click)='editRecipe(currentRecipe)'>Edit</button>
       </li>
     </ul>
     <div>
+      <div *ngIf="showRecipe">
+      <h3>{{showRecipe.title}}</h3>
+      <h3>{{showRecipe.ingredients}}</h3>
+      <h3>{{showRecipe.directions}}</h3>
+      <p>Recipe Baked? {{showRecipe.baked}}</p>
+      <button (click)="finishedEditing()">Done</button>
+      </div>
+
       <div *ngIf="selectedRecipe">
       <h3>{{selectedRecipe.title}}</h3>
       <p>Recipe Baked? {{selectedRecipe.baked}}</p>
@@ -45,6 +54,12 @@ export class AppComponent {
     new Recipe('Mac and Cheese', 'macaroni and cheese', 'Put it all together and youre good to go', 2),
     new Recipe('Peanut Butter Bars', 'Peanut butter, powdered sugar, butter, crushed graham crackers, melted chocolate chips', 'melt butter, mix together all ingredients except chocolate, put into brownie pan, drizzle chocolate to cover top, put in fridge for 2 hours.', 3)
   ];
+  showRecipe = null;
+
+  showDetails(clickedRecipe) {
+    this.showRecipe = clickedRecipe;
+  }
+
 
   selectedRecipe = null;
 
@@ -72,6 +87,7 @@ export class AppComponent {
 
   finishedEditing() {
     this.selectedRecipe = null;
+    this.showRecipe = null;
   }
 }
 
