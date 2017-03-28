@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <h1>RECIPEEEESSSSSSSS</h1>
     <h3>{{currentFoodMood}} - {{month}}/{{day}}/{{year}}</h3>
     <ul>
-      <li>{{firstRecipe.title}}, {{firstRecipe.ingredients}}, {{firstRecipe.directions}}</li>
+      <li *ngFor="let currentRecipe of recipes">{{currentRecipe.title}}, {{currentRecipe.ingredients}}, {{currentRecipe.directions}}</li>
     </ul>
   </div>
   `
@@ -19,7 +19,11 @@ export class AppComponent {
   month: number = this.currentTime.getMonth() + 1;
   day: number = this.currentTime.getDate();
   year: number = this.currentTime.getFullYear();
-  firstRecipe: Recipe = new Recipe("Chocolate Cake", "cocoa powder, flour, water, eggs", "Put it all together and youre good to go");
+  recipes: Recipe[] = [
+    new Recipe('Chocolate Cake', 'cocoa powder, flour, water, eggs', 'Put it all together and youre good to go'),
+    new Recipe('Mac and Cheese', 'macaroni and cheese', 'Put it all together and youre good to go'),
+    new Recipe('Peanut Butter Bars', 'Peanut butter, powdered sugar, butter, crushed graham crackers, melted chocolate chips', 'melt butter, mix together all ingredients except chocolate, put into brownie pan, drizzle chocolate to cover top, put in fridge for 2 hours.')
+  ];
 }
 
 export class Recipe {
