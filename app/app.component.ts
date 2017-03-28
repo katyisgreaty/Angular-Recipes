@@ -15,15 +15,21 @@ import { Component } from '@angular/core';
     <div>
       <div *ngIf="showRecipe">
       <h3>{{showRecipe.title}}</h3>
-      <h3>{{showRecipe.ingredients}}</h3>
-      <h3>{{showRecipe.directions}}</h3>
+      <h4> Ingredients: </h4>
+      <h5 *ngFor="let currentIngredient of showRecipe.ingredients">{{currentIngredient}}</h5>
+      <h4> Directions: </h4>
+      <h5>{{showRecipe.directions}}</h5>
       <p>Recipe Baked? {{showRecipe.baked}}</p>
       <button (click)="finishedEditing()">Done</button>
+
       </div>
 
       <div *ngIf="selectedRecipe">
       <h3>{{selectedRecipe.title}}</h3>
+      <h5>Ingredients: {{selectedRecipe.ingredients}}</h5>
+      <h5>Directions: {{selectedRecipe.directions}}</h5>
       <p>Recipe Baked? {{selectedRecipe.baked}}</p>
+
       <h3>Edit Recipe</h3>
       <label>Enter Recipe title:</label>
         <input [(ngModel)]="selectedRecipe.title">
@@ -41,6 +47,7 @@ import { Component } from '@angular/core';
     </div>
   </div>
   `
+
 })
 
 export class AppComponent {
@@ -50,14 +57,18 @@ export class AppComponent {
   day: number = this.currentTime.getDate();
   year: number = this.currentTime.getFullYear();
   recipes: Recipe[] = [
-    new Recipe('Chocolate Cake', 'cocoa powder, flour, water, eggs', 'Put it all together and youre good to go', 1),
-    new Recipe('Mac and Cheese', 'macaroni and cheese', 'Put it all together and youre good to go', 2),
-    new Recipe('Peanut Butter Bars', 'Peanut butter, powdered sugar, butter, crushed graham crackers, melted chocolate chips', 'melt butter, mix together all ingredients except chocolate, put into brownie pan, drizzle chocolate to cover top, put in fridge for 2 hours.', 3)
+    new Recipe('Chocolate Cake', ['cocoa powder', 'flour', 'water', 'eggs'], 'Put it all together and youre good to go', 1),
+    new Recipe('Mac and Cheese', ['macaroni', 'cheese'], 'Put it all together and youre good to go', 2),
+    new Recipe('Peanut Butter Bars', ['Peanut butter', 'powdered sugar', 'butter', 'crushed graham crackers', 'melted chocolate chips'], 'melt butter, mix together all ingredients except chocolate, put into brownie pan, drizzle chocolate to cover top, put in fridge for 2 hours.', 3)
   ];
   showRecipe = null;
 
   showDetails(clickedRecipe) {
     this.showRecipe = clickedRecipe;
+    console.log(clickedRecipe.ingredients);
+    console.log(clickedRecipe.ingredients.toString().split(','));
+    // console.log(clickedRecipe.ingredients.split(' '));
+
   }
 
 
@@ -65,6 +76,7 @@ export class AppComponent {
 
   editRecipe(clickedRecipe) {
     this.selectedRecipe = clickedRecipe;
+
   }
 
   isBaked(clickedRecipe: Recipe) {
@@ -89,9 +101,10 @@ export class AppComponent {
     this.selectedRecipe = null;
     this.showRecipe = null;
   }
+
 }
 
 export class Recipe {
   public baked: boolean = false;
-  constructor(public title: string, public ingredients: string, public directions: string, public tastiness: number) { }
+  constructor(public title: string, public ingredients: string[], public directions: string, public tastiness: number) { }
 }
