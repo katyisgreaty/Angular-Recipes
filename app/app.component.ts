@@ -7,23 +7,28 @@ import { Component } from '@angular/core';
     <h1>RECIPEEEESSSSSSSS</h1>
     <h3>{{currentFoodMood}} - {{month}}/{{day}}/{{year}}</h3>
     <ul>
-      <li [class]="tastinessColor(currentRecipe)" (click)="isBaked(currentRecipe)" *ngFor="let currentRecipe of recipes" >{{currentRecipe.title}} <button (click)='editRecipe(currentRecipe)'>Edit</button></li>
+      <li [class]="tastinessColor(currentRecipe)" (click)="isBaked(currentRecipe)" *ngFor="let currentRecipe of recipes"> {{currentRecipe.title}}
+        <button (click)='editRecipe(currentRecipe)'>Edit</button>
+      </li>
     </ul>
     <div>
-     <h3>{{selectedRecipe.title}}</h3>
-     <p>Recipe Baked? {{selectedRecipe.baked}}</p>
-    <h3>Edit Recipe</h3>
-    <label>Enter Recipe title:</label>
-    <input [(ngModel)]="selectedRecipe.title">
-    <label>Enter Recipe ingredients:</label>
-    <input [(ngModel)]="selectedRecipe.ingredients">
-    <label>Enter Recipe directions:</label>
-    <input [(ngModel)]="selectedRecipe.directions">
-     <label>Enter Recipe Tastiness Level (1-3):</label>
-     <br>
-     <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="1">1 (Low Tastiness)<br>
-     <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="2">2 (Medium Tastiness)<br>
-     <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="3">3 (High Tastiness)
+      <div *ngIf="selectedRecipe">
+      <h3>{{selectedRecipe.title}}</h3>
+      <p>Recipe Baked? {{selectedRecipe.baked}}</p>
+      <h3>Edit Recipe</h3>
+      <label>Enter Recipe title:</label>
+        <input [(ngModel)]="selectedRecipe.title">
+      <label>Enter Recipe ingredients:</label>
+        <input [(ngModel)]="selectedRecipe.ingredients">
+      <label>Enter Recipe directions:</label>
+        <input [(ngModel)]="selectedRecipe.directions">
+      <label>Enter Recipe Tastiness Level (1-3):</label>
+      <br>
+      <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="1">1 (Low Tastiness)<br>
+      <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="2">2 (Medium Tastiness)<br>
+      <input type="radio" [(ngModel)]="selectedRecipe.tastiness" [value]="3">3 (High Tastiness)
+      <button (click)="finishedEditing()">Done</button>
+      </div>
     </div>
   </div>
   `
@@ -41,7 +46,7 @@ export class AppComponent {
     new Recipe('Peanut Butter Bars', 'Peanut butter, powdered sugar, butter, crushed graham crackers, melted chocolate chips', 'melt butter, mix together all ingredients except chocolate, put into brownie pan, drizzle chocolate to cover top, put in fridge for 2 hours.', 3)
   ];
 
-  selectedRecipe: Recipe = this.recipes[0];
+  selectedRecipe = null;
 
   editRecipe(clickedRecipe) {
     this.selectedRecipe = clickedRecipe;
@@ -55,7 +60,7 @@ export class AppComponent {
     }
   }
 
-    tastinessColor(currentRecipe){
+  tastinessColor(currentRecipe){
     if (currentRecipe.tastiness === 1){
       return "bg-danger";
     } else if (currentRecipe.tastiness === 2) {
@@ -63,6 +68,10 @@ export class AppComponent {
     } else {
       return "bg-info";
     }
+  }
+
+  finishedEditing() {
+    this.selectedRecipe = null;
   }
 }
 
